@@ -9,7 +9,7 @@ on:
         type: string
       CONFIRMATION:
         required: true
-        description: Type 'DEPLOY TO PRODUCTION' to confirm.
+        description: Type 'DEPLOY TO PROD' to confirm.
         type: string
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       - run: |
           [ "refs/tags/${{ inputs.TAG_NAME }}" = "${{ github.ref }}" ]
       - run: |
-          [ "${{ inputs.CONFIRMATION }}" = "DEPLOY TO PRODUCTION" ]
+          [ "${{ inputs.CONFIRMATION }}" = "DEPLOY TO PROD" ]
 
   execute:
     name: Execute
