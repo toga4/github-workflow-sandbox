@@ -3,9 +3,13 @@ name: Rollback Prod
 on:
   workflow_dispatch:
     inputs:
-      ROLLBACK_PRODUCTION:
+      TAG_NAME:
         required: true
-        description: Please type *ROLLBACK PRODUCTION* to confirm.
+        description: Type tag name to confirm.
+        type: string
+      CONFIRMATION:
+        required: true
+        description: Type 'DEPLOY TO PRODUCTION' to confirm.
         type: string
 
 jobs:
@@ -14,7 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          [ "${{ inputs.ROLLBACK_PRODUCTION }}" = "ROLLBACK PRODUCTION" ]
+          [ "refs/tags/${{ inputs.TAG_NAME }}" = "${{ github.ref }}" ]
+      - run: |
+          [ "${{ inputs.CONFIRMATION }}" = "DEPLOY TO PRODUCTION" ]
 
   execute:
     name: Execute
