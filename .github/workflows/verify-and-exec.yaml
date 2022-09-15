@@ -1,0 +1,25 @@
+name: Rollback Prod
+
+on:
+  workflow_dispatch:
+    inputs:
+      ROLLBACK_PRODUCTION:
+        required: true
+        description: Please type *ROLLBACK PRODUCTION* to confirm.
+        type: string
+
+jobs:
+  confirm:
+    name: Confirm
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          [ "${{ inputs.ROLLBACK_PRODUCTION }}" = "ROLLBACK PRODUCTION" ]
+
+  execute:
+    name: Execute
+    runs-on: ubuntu-latest
+    needs:
+      - confirm
+    steps:
+      - run: echo "executed."
